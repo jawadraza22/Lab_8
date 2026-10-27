@@ -1,0 +1,15 @@
+Lab 8 - Task 3 Analysis Notes
+
+1. What changed in the customer table when the direction was Both?
+Under 'Single' cross-filter direction, filtering the Product slicer to 'Laptop' did not propagate from the Sales fact table back to the Customers dimension table, resulting in all four customers (Ali Khan, Sara, Ahmed, Hina) being displayed. When the direction was changed to 'Both', the filter flowed bidirectionally (Products -> Sales -> Customers), filtering the Customers table down to show only 'Ali Khan' (the sole purchaser of Laptop).
+
+2. Which customer has no orders?
+Hina (CustomerID: C04) has no orders in the Sales table.
+
+3. Which product was never sold?
+Monitor has never been sold (it appears in Products.csv but not in Sales_2023.csv).
+
+4. Why Computers Sales shows 900 on the Accessories row?
+The measure is defined as:
+CALCULATE([Total Sales], Products[Category] = "Computers")
+The CALCULATE function overrides and replaces the prevailing row/filter context for Category with its own explicit filter argument (Category = "Computers"). Consequently, even on the Accessories row of the table, CALCULATE evaluates Total Sales strictly for Computers, returning 900.
